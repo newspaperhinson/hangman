@@ -1,0 +1,17 @@
+:root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+body {
+  font-size: 4em;
+}
+.guess {
+  display: flex;
+  flex-direction: row;
+}
+.character {
+  margin: 0 10px;
+}

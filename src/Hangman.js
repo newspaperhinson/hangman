@@ -1,6 +1,9 @@
 // import react hooks
 import { useEffect } from "react"
 
+// import components
+import QWERTY from "./QWERTY"
+
 // import custom hooks
 import { useHangman } from "./useHangman"
 
@@ -17,10 +20,6 @@ const Hangman = () => {
 
     }, [handleKeyUp])
 
-    const refreshPage = () => {
-        window.location.reload(false)
-    }
-
     return (
         <div className="hangman">
             <div className="solution">{solution}</div>
@@ -33,6 +32,7 @@ const Hangman = () => {
             </div>
             <div className="chance">You have {chance} times left</div>
             <div className="history">You have tried {history.join(', ')}</div>
+            <QWERTY />
             {isFinished && <div className="result">
                 {guess.every(char => char.isRevealed)? 'You win': 'You lose'}
             </div>}

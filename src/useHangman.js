@@ -25,30 +25,30 @@ export const useHangman = () => {
 
     // function for handling game mechanism
     const enterKey = (key) => {
-        // check whether the key is in history
-        if (!history.includes(key)) {
-            // check whether the solution contains the key
-            if (solution.includes(key)) {
-                // reveal the key in guess => return the same object, change isRevealed to true if the key matches
-                setGuess(prevGuess => prevGuess.map((char => (
-                    char.key === key? {...char, isRevealed: true}: char
-                ))))
+        if (!isFinished) {
+            // check whether the key is in history
+            if (!history.includes(key)) {
+                // check whether the solution contains the key
+                if (solution.includes(key)) {
+                    // reveal the key in guess => return the same object, change isRevealed to true if the key matches
+                    setGuess(prevGuess => prevGuess.map((char => (
+                        char.key === key? {...char, isRevealed: true}: char
+                    ))))
+                }
+                else {
+                    setChance(prev => prev-1)
+                }
+                // add the key into history
+                setHistory(prev => [...prev, key])
             }
-            else {
-                setChance(prev => prev-1)
-            }
-            // add the key into history
-            setHistory(prev => [...prev, key])
         }
     }
 
     // event handler for press key
     const handleKeyUp = ({key}) => {
-        if (!isFinished) {
-            // use RegEx to check whether key is valid
-            if (/^[A-Za-z]$/.test(key)) {
-                enterKey(key)
-            }
+        // use RegEx to check whether key is valid
+        if (/^[A-Za-z]$/.test(key)) {
+            enterKey(key)
         }
     }
 

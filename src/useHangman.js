@@ -67,5 +67,5 @@ export const useHangman = () => {
         setIsFinished(false)
     }
 
-    return { solution, guess, chance, history, isFinished, handleKeyUp, resetGame }
+    return { solution, guess, chance, history, isFinished, handleKeyUp, resetGame, enterKey }
 }

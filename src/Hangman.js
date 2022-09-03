@@ -1,5 +1,5 @@
 // import react hooks
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 
 // import components
 import QWERTY from "./QWERTY"

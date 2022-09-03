@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
 export const useHangman = () => {
+    const [bank, setBank] = useState(null)
     const [solution, setSolution] = useState(null)
     const [guess, setGuess] = useState([])
     const [chance, setChance] = useState(6)
@@ -10,13 +11,16 @@ export const useHangman = () => {
     
     // initialize solution and guess
     useEffect(() => {
-        const password = 'happy'
-        setSolution(password)
-        let guessArray =[]
-        for (let index in password) {
-            guessArray.push({key: password[index], isRevealed: false})
-        }
-        setGuess(guessArray)
+        fetch('http://localhost:3001/solutions').then(res => res.json().then(data => {
+            setBank(data)
+            const password = data[Math.floor(Math.random() * data.length)]
+            setSolution(password)
+            let guessArray =[]
+            for (let index in password) {
+                guessArray.push({key: password[index], isRevealed: false})
+            }
+            setGuess(guessArray)
+        }))
     }, [setSolution, setGuess])
 
     // check whether the user win or lose
@@ -62,7 +66,7 @@ export const useHangman = () => {
 
     const resetGame = () => {
         // re-initialize solution and guess
-        const password = 'react'
+        const password = bank[Math.floor(Math.random() * bank.length)]
         setSolution(password)
         let guessArray =[]
         for (let index in password) {

@@ -1,5 +1,5 @@
 // import react hooks
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 
 // import components
 import QWERTY from "./QWERTY"
@@ -9,7 +9,7 @@ import { useHangman } from "./useHangman"
 
 const Hangman = () => {
 
-    const {solution, guess, chance, history, isFinished, handleKeyUp, resetGame, enterKey} = useHangman()
+    const {solution, guess, chance, history, isFinished, qwerty,  handleKeyUp, resetGame, handleClick } = useHangman()
 
     useEffect(() => {
         window.addEventListener('keyup', handleKeyUp)
@@ -19,7 +19,7 @@ const Hangman = () => {
         }
 
     }, [handleKeyUp])
-
+    
     return (
         <div className="hangman">
             <div className="solution">{solution}</div>
@@ -32,7 +32,7 @@ const Hangman = () => {
             </div>
             <div className="chance">You have {chance} times left</div>
             <div className="history">You have tried {history.join(', ')}</div>
-            <QWERTY handleClick={enterKey} />
+            <QWERTY qwerty={qwerty} handleClick={handleClick} />
             {isFinished && <div className="result">
                 {guess.every(char => char.isRevealed)? 'You win': 'You lose'}
             </div>}

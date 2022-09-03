@@ -1,10 +1,4 @@
-import { useState } from "react"
-
-const QWERTY = ({handleClick}) => {
-    
-    const [qwerty, setQwerty] = useState(['qwertyuiop'.split(''), 'asdfghjkl'.split(''), 'zxcvbnm'.split('')])
-    
-    const style = {backgroundColor: 'blue'}
+const QWERTY = ({qwerty, handleClick}) => {
 
     return (
         <div className="QWERTY">
@@ -12,8 +6,7 @@ const QWERTY = ({handleClick}) => {
             <div className="qwerty-row">
                 {row.map((key) => (
                     <div className="qwerty-key"
-                        key={key}
-                        style={style}
+                        style={{backgroundColor: key? 'white': 'grey'}}
                         onClick={() => handleClick(key)}
                     >
                             {key.toUpperCase()}

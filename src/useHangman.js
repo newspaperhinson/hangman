@@ -6,6 +6,7 @@ export const useHangman = () => {
     const [chance, setChance] = useState(6)
     const [history, setHistory] = useState([])
     const [isFinished, setIsFinished] = useState(false)
+    const [qwerty, setQwerty] = useState(['qwertyuiop'.split(''), 'asdfghjkl'.split(''), 'zxcvbnm'.split('')])
     
     // initialize solution and guess
     useEffect(() => {
@@ -24,7 +25,7 @@ export const useHangman = () => {
     }, [chance, guess, setIsFinished])
 
     // function for handling game mechanism
-    const enterKey = (key) => {
+    const handleClick = (key) => {
         if (!isFinished) {
             // check whether the key is in history
             if (!history.includes(key)) {
@@ -40,6 +41,13 @@ export const useHangman = () => {
                 }
                 // add the key into history
                 setHistory(prev => [...prev, key])
+                setQwerty(prev => (
+                    prev.map(row => (
+                        row.map(char => (
+                            char === key? '': char
+                        ))
+                    ))
+                ))
             }
         }
     }
@@ -48,7 +56,7 @@ export const useHangman = () => {
     const handleKeyUp = ({key}) => {
         // use RegEx to check whether key is valid
         if (/^[A-Za-z]$/.test(key)) {
-            enterKey(key)
+            handleClick(key)
         }
     }
 
@@ -65,7 +73,8 @@ export const useHangman = () => {
         setChance(6)
         setHistory([])
         setIsFinished(false)
+        setQwerty(['qwertyuiop'.split(''), 'asdfghjkl'.split(''), 'zxcvbnm'.split('')])
     }
 
-    return { solution, guess, chance, history, isFinished, handleKeyUp, resetGame, enterKey }
+    return { solution, guess, chance, history, isFinished, qwerty, handleKeyUp, resetGame, handleClick }
 }

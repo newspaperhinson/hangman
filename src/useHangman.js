@@ -23,29 +23,49 @@ export const useHangman = () => {
         setIsFinished(chance === 0 || guess.every(char => char.isRevealed))
     }, [chance, guess, setIsFinished])
 
+    // function for handling game mechanism
+    const enterKey = (key) => {
+        // check whether the key is in history
+        if (!history.includes(key)) {
+            // check whether the solution contains the key
+            if (solution.includes(key)) {
+                // reveal the key in guess => return the same object, change isRevealed to true if the key matches
+                setGuess(prevGuess => prevGuess.map((char => (
+                    char.key === key? {...char, isRevealed: true}: char
+                ))))
+            }
+            else {
+                setChance(prev => prev-1)
+            }
+            // add the key into history
+            setHistory(prev => [...prev, key])
+        }
+    }
+
     // event handler for press key
     const handleKeyUp = ({key}) => {
         if (!isFinished) {
             // use RegEx to check whether key is valid
             if (/^[A-Za-z]$/.test(key)) {
-                // check whether the key is in history
-                if (!history.includes(key)) {
-                    // check whether the solution contains the key
-                    if (solution.includes(key)) {
-                        // reveal the key in guess => return the same object, change isRevealed to true if the key matches
-                        setGuess(prevGuess => prevGuess.map((char => (
-                            char.key === key? {...char, isRevealed: true}: char
-                        ))))
-                    }
-                    else {
-                        setChance(prev => prev-1)
-                    }
-                    // add the key into history
-                    setHistory(prev => [...prev, key])
-                }
+                enterKey(key)
             }
         }
     }
 
-    return { solution, guess, chance, history, isFinished, handleKeyUp }
+    const resetGame = () => {
+        // re-initialize solution and guess
+        const password = 'react'
+        setSolution(password)
+        let guessArray =[]
+        for (let index in password) {
+            guessArray.push({key: password[index], isRevealed: false})
+        }
+        setGuess(guessArray)
+
+        setChance(6)
+        setHistory([])
+        setIsFinished(false)
+    }
+
+    return { solution, guess, chance, history, isFinished, handleKeyUp, resetGame }
 }

@@ -6,7 +6,7 @@ import { useHangman } from "./useHangman"
 
 const Hangman = () => {
 
-    const {solution, guess, chance, history, isFinished, handleKeyUp} = useHangman()
+    const {solution, guess, chance, history, isFinished, handleKeyUp, resetGame} = useHangman()
 
     useEffect(() => {
         window.addEventListener('keyup', handleKeyUp)
@@ -36,7 +36,7 @@ const Hangman = () => {
             {isFinished && <div className="result">
                 {guess.every(char => char.isRevealed)? 'You win': 'You lose'}
             </div>}
-            {isFinished && <button onClick={refreshPage} >next game</button>}
+            {isFinished && <button onClick={resetGame} >next game</button>}
         </div>
     )
 }

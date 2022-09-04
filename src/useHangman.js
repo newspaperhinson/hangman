@@ -14,6 +14,7 @@ export const useHangman = () => {
         fetch('http://localhost:3001/solutions').then(res => res.json().then(data => {
             setBank(data)
             const password = data[Math.floor(Math.random() * data.length)]
+            console.log(password)
             setSolution(password)
             let guessArray =[]
             for (let index in password) {
@@ -67,6 +68,7 @@ export const useHangman = () => {
     const resetGame = () => {
         // re-initialize solution and guess
         const password = bank[Math.floor(Math.random() * bank.length)]
+        console.log(password)
         setSolution(password)
         let guessArray =[]
         for (let index in password) {

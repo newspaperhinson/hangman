@@ -22,7 +22,6 @@ const Hangman = () => {
     
     return (
         <div className="hangman">
-            <div className="solution">{solution}</div>
             <div className="guess">
                 {guess && guess.map((char, index) => (
                     <div className="character" key={index}>
